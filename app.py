@@ -20,6 +20,12 @@ supabase = init_connection()
 # Custom CSS
 st.markdown("""
     <style>
+    /* Hide Streamlit header, footer, and menu */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+
+    /* Custom styles */
     .main-title { font-size: 42px; font-weight: bold; color: #ffffff; text-align: center; }
     .subtitle { font-size: 20px; color: #aaaaaa; text-align: center; margin-bottom: 30px; }
     </style>
@@ -36,6 +42,7 @@ menu = st.sidebar.radio(
 if menu == "Home":
     st.markdown('<p class="main-title">Katia Ferreira</p>', unsafe_allow_html=True)
     st.markdown('<p class="subtitle">Actress • Model • Performing Artist</p>', unsafe_allow_html=True)
+    
     col1, col2 = st.columns([1, 2])
     with col1:
         st.info("🖼️ Profile image will go here\n\n(e.g., `st.image('assets/profile.jpg')`)")
@@ -69,7 +76,7 @@ elif menu == "CV":
     st.subheader("🎭 Theatre and Film Work")
     st.write("- **Project Name 1** (Role Name) - Year")
 
-# 5. Contact (Supabase Connection)
+# 5. Contact
 elif menu == "Contact":
     st.title("📬 Contact")
     st.write("Contact form for agencies or directors.")
@@ -83,7 +90,6 @@ elif menu == "Contact":
         if submit:
             if name and email and message:
                 try:
-                    # Insert data into Supabase
                     data = {"name": name, "email": email, "message": message}
                     supabase.table("contact_messages").insert(data).execute()
                     st.success("Thank you! Your message has been sent successfully.")
