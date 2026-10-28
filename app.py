@@ -17,15 +17,23 @@ def init_connection():
 
 supabase = init_connection()
 
-# Custom CSS
+# Custom CSS to hide all Streamlit branding and badges
 st.markdown("""
     <style>
-    /* Hide Streamlit header, footer, and menu */
+    /* Hide main menu, header, footer, and toolbar */
     #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
     header {visibility: hidden;}
-
-    /* Custom styles */
+    footer {visibility: hidden;}
+    div[data-testid="stToolbar"] {visibility: hidden;}
+    div[data-testid="stDecoration"] {visibility: hidden;}
+    div[data-testid="stStatusWidget"] {visibility: hidden;}
+    
+    /* Hide the bottom right 'Hosted with Streamlit' badge */
+    .viewerBadge_container__1QSob {display: none !important;}
+    .st-emotion-cache-15zrgzn {display: none !important;}
+    .stAppDeployButton {display: none;}
+    
+    /* Custom styles for titles */
     .main-title { font-size: 42px; font-weight: bold; color: #ffffff; text-align: center; }
     .subtitle { font-size: 20px; color: #aaaaaa; text-align: center; margin-bottom: 30px; }
     </style>
