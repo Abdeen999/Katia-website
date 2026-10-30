@@ -53,7 +53,8 @@ if menu == "Home":
     
     col1, col2 = st.columns([1, 2])
     with col1:
-        st.info("🖼️ Profile image will go here\n\n(e.g., `st.image('assets/profile.jpg')`)")
+        # Photo placeholder - yahan hum baad mein image lagayenge
+        st.info("🖼️ Profile image will go here\n\n(Photo coming soon!)")
     with col2:
         st.subheader("Welcome!")
         st.write("""
