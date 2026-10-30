@@ -26,6 +26,10 @@ st.markdown("""
     a[href*="streamlit.io"] {display: none !important;}
     .stAppDeployButton {display: none !important;}
     
+    /* Hide the top right toolbar (GitHub cat, Share, Edit, etc.) */
+    div[data-testid="stToolbar"] {visibility: hidden !important;}
+    div[data-testid="stDecoration"] {visibility: hidden !important;}
+    
     /* Ensure sidebar toggle button stays visible and clickable */
     [data-testid="stSidebarNav"] {margin-top: 0px;}
     
