@@ -24,15 +24,16 @@ st.markdown("""
     #MainMenu {visibility: hidden;}
     header {visibility: hidden;}
     footer {visibility: hidden;}
-    div[data-testid="stToolbar"] {visibility: hidden;}
-    div[data-testid="stDecoration"] {visibility: hidden;}
-    div[data-testid="stStatusWidget"] {visibility: hidden;}
+    div[data-testid="stToolbar"] {visibility: hidden !important;}
+    div[data-testid="stDecoration"] {visibility: hidden !important;}
+    div[data-testid="stStatusWidget"] {visibility: hidden !important;}
     
-    /* Hide the bottom right 'Hosted with Streamlit' badge */
-    .viewerBadge_container__1QSob {display: none !important;}
-    .st-emotion-cache-15zrgzn {display: none !important;}
-    .stAppDeployButton {display: none;}
+    /* This is the magic trick: Hide any link that goes to streamlit.io */
+    a[href*="streamlit.io"] {display: none !important;}
     
+    /* Hide the deploy button */
+    .stAppDeployButton {display: none !important;}
+
     /* Custom styles for titles */
     .main-title { font-size: 42px; font-weight: bold; color: #ffffff; text-align: center; }
     .subtitle { font-size: 20px; color: #aaaaaa; text-align: center; margin-bottom: 30px; }
