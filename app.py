@@ -5,7 +5,8 @@ from supabase import create_client, Client
 st.set_page_config(
     page_title="Katia Ferreira Portfolio",
     page_icon="🎬",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"  # <--- یہ لائن مینو کو ہمیشہ کھلا رکھے گی
 )
 
 # Connect to Supabase securely
@@ -20,23 +21,23 @@ supabase = init_connection()
 # Custom CSS to hide all Streamlit branding and badges
 st.markdown("""
     <style>
-    /* Hide main menu, header, footer, and toolbar */
+    /* Hide main menu, footer, and toolbar */
     #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
     footer {visibility: hidden;}
-    
-    /* Hide the toolbar and status widgets */
     div[data-testid="stToolbar"] {visibility: hidden !important;}
     div[data-testid="stDecoration"] {visibility: hidden !important;}
     div[data-testid="stStatusWidget"] {visibility: hidden !important;}
     
-    /* Hide the "Hosted with Streamlit" badge and red crown */
-    .viewerBadge_container__1QSob {display: none !important;}
-    .st-emotion-cache-15zrgzn {display: none !important;}
-    .stAppDeployButton {display: none !important;}
-    
-    /* Hide any link that goes to streamlit.io */
+    /* Hide the bottom right 'Hosted with Streamlit' badge */
     a[href*="streamlit.io"] {display: none !important;}
+    .stAppDeployButton {display: none !important;}
+
+    /* Keep the sidebar toggle visible so you can open/close it */
+    [data-testid="collapsedControl"] {
+        visibility: visible !important;
+        display: block !important;
+        color: #ffffff !important;
+    }
     
     /* Custom styles for titles */
     .main-title { font-size: 42px; font-weight: bold; color: #ffffff; text-align: center; }
