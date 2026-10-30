@@ -1,12 +1,13 @@
 import streamlit as st
 from supabase import create_client, Client
+import os
 
 # Page settings
 st.set_page_config(
     page_title="Katia Ferreira Portfolio",
     page_icon="🎬",
     layout="wide",
-    initial_sidebar_state="expanded"  # <--- یہ لائن مینو کو ہمیشہ کھلا رکھے گی
+    initial_sidebar_state="expanded"
 )
 
 # Connect to Supabase securely
@@ -18,10 +19,10 @@ def init_connection():
 
 supabase = init_connection()
 
-# Custom CSS to hide all Streamlit branding and badges
+# Custom CSS
 st.markdown("""
     <style>
-    /* Hide main menu, footer, and toolbar */
+    /* Hide main menu and footer */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     div[data-testid="stToolbar"] {visibility: hidden !important;}
@@ -32,11 +33,12 @@ st.markdown("""
     a[href*="streamlit.io"] {display: none !important;}
     .stAppDeployButton {display: none !important;}
 
-    /* Keep the sidebar toggle visible so you can open/close it */
+    /* Force Sidebar Toggle Button to be visible on mobile and desktop */
     [data-testid="collapsedControl"] {
         visibility: visible !important;
         display: block !important;
-        color: #ffffff !important;
+        color: #ffffff !important; 
+        z-index: 999999 !important;
     }
     
     /* Custom styles for titles */
@@ -59,7 +61,12 @@ if menu == "Home":
     
     col1, col2 = st.columns([1, 2])
     with col1:
-        st.info("🖼️ Profile image will go here\n\n(Photo coming soon!)")
+        # Safety check: Agar image file mojood hai to dikhaye, warna placeholder dikhaye
+        if os.path.exists("assets/katia.jpg"):
+            st.image("assets/katia.jpg", caption="Katia Ferreira", use_container_width=True)
+        else:
+            st.info("🖼️ Profile image will go here\n\n(Photo coming soon!)")
+            
     with col2:
         st.subheader("Welcome!")
         st.write("""
@@ -89,6 +96,15 @@ elif menu == "CV":
     st.title("📄 Experience and Education (CV)")
     st.subheader("🎭 Theatre and Film Work")
     st.write("- **Project Name 1** (Role Name) - Year")
+    
+    st.markdown("---")
+    st.subheader("📥 Download CV")
+    st.download_button(
+        label="📄 Download Full Resume (PDF)",
+        data=b"CV file content placeholder",
+        file_name="Katia_Ferreira_CV.pdf",
+        mime="application/pdf"
+    )
 
 # 5. Contact
 elif menu == "Contact":
@@ -96,10 +112,10 @@ elif menu == "Contact":
     st.write("Contact form for agencies or directors.")
 
     with st.form("contact_form", clear_on_submit=True):
-        name = st.text_input("Your Name")
-        email = st.text_input("Email")
-        message = st.text_area("Message")
-        submit = st.form_submit_button("Send Message")
+        name = st.text_input("👤 Your Name")
+        email = st.text_input("📧 Email Address")
+        message = st.text_area("💬 Message")
+        submit = st.form_submit_button("📩 Send Message")
 
         if submit:
             if name and email and message:
