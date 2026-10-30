@@ -1,6 +1,6 @@
 import streamlit as st
 from supabase import create_client, Client
-import os
+from pathlib import Path  # <-- Naya import image ke liye
 
 # Page settings
 st.set_page_config(
@@ -33,7 +33,7 @@ st.markdown("""
     a[href*="streamlit.io"] {display: none !important;}
     .stAppDeployButton {display: none !important;}
 
-    /* Force Sidebar Toggle Button to be visible on mobile and desktop */
+    /* Force Sidebar Toggle Button to be visible */
     [data-testid="collapsedControl"] {
         visibility: visible !important;
         display: block !important;
@@ -61,9 +61,10 @@ if menu == "Home":
     
     col1, col2 = st.columns([1, 2])
     with col1:
-        # Safety check: Agar image file mojood hai to dikhaye, warna placeholder dikhaye
-        if os.path.exists("assets/katia.jpg"):
-            st.image("assets/katia.jpg", caption="Katia Ferreira", use_container_width=True)
+        # Copilot ki tajweez ke mutabiq path fix
+        image_path = Path(__file__).parent / "assets" / "katia.jpg"
+        if image_path.exists():
+            st.image(str(image_path), caption="Katia Ferreira", use_container_width=True)
         else:
             st.info("🖼️ Profile image will go here\n\n(Photo coming soon!)")
             
@@ -119,12 +120,16 @@ elif menu == "Contact":
 
         if submit:
             if name and email and message:
-                try:
-                    data = {"name": name, "email": email, "message": message}
-                    supabase.table("contact_messages").insert(data).execute()
-                    st.success("Thank you! Your message has been sent successfully.")
-                except Exception as e:
-                    st.error(f"An error occurred: {e}")
+                # Copilot ki tajweez: Email check karna
+                if "@" not in email or "." not in email:
+                    st.warning("Please enter a valid email address (e.g., name@example.com).")
+                else:
+                    try:
+                        data = {"name": name, "email": email, "message": message}
+                        supabase.table("contact_messages").insert(data).execute()
+                        st.success("Thank you! Your message has been sent successfully.")
+                    except Exception as e:
+                        st.error(f"An error occurred: {e}")
             else:
                 st.warning("Please fill in all fields before submitting.")
 
