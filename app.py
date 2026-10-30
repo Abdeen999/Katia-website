@@ -24,16 +24,20 @@ st.markdown("""
     #MainMenu {visibility: hidden;}
     header {visibility: hidden;}
     footer {visibility: hidden;}
+    
+    /* Hide the toolbar and status widgets */
     div[data-testid="stToolbar"] {visibility: hidden !important;}
     div[data-testid="stDecoration"] {visibility: hidden !important;}
     div[data-testid="stStatusWidget"] {visibility: hidden !important;}
     
-    /* This is the magic trick: Hide any link that goes to streamlit.io */
+    /* Hide the "Hosted with Streamlit" badge and red crown */
+    .viewerBadge_container__1QSob {display: none !important;}
+    .st-emotion-cache-15zrgzn {display: none !important;}
+    .stAppDeployButton {display: none !important;}
+    
+    /* Hide any link that goes to streamlit.io */
     a[href*="streamlit.io"] {display: none !important;}
     
-    /* Hide the deploy button */
-    .stAppDeployButton {display: none !important;}
-
     /* Custom styles for titles */
     .main-title { font-size: 42px; font-weight: bold; color: #ffffff; text-align: center; }
     .subtitle { font-size: 20px; color: #aaaaaa; text-align: center; margin-bottom: 30px; }
@@ -54,7 +58,6 @@ if menu == "Home":
     
     col1, col2 = st.columns([1, 2])
     with col1:
-        # Photo placeholder - yahan hum baad mein image lagayenge
         st.info("🖼️ Profile image will go here\n\n(Photo coming soon!)")
     with col2:
         st.subheader("Welcome!")
