@@ -1,6 +1,5 @@
 import streamlit as st
 from supabase import create_client, Client
-from pathlib import Path  # <-- Naya import image ke liye
 
 # Page settings
 st.set_page_config(
@@ -19,27 +18,16 @@ def init_connection():
 
 supabase = init_connection()
 
-# Custom CSS
+# Clean CSS to keep header controls visible on both phone and laptop
 st.markdown("""
     <style>
-    /* Hide main menu and footer */
-    #MainMenu {visibility: hidden;}
+    /* Hide footer and branding badges */
     footer {visibility: hidden;}
-    div[data-testid="stToolbar"] {visibility: hidden !important;}
-    div[data-testid="stDecoration"] {visibility: hidden !important;}
-    div[data-testid="stStatusWidget"] {visibility: hidden !important;}
-    
-    /* Hide the bottom right 'Hosted with Streamlit' badge */
     a[href*="streamlit.io"] {display: none !important;}
     .stAppDeployButton {display: none !important;}
-
-    /* Force Sidebar Toggle Button to be visible */
-    [data-testid="collapsedControl"] {
-        visibility: visible !important;
-        display: block !important;
-        color: #ffffff !important; 
-        z-index: 999999 !important;
-    }
+    
+    /* Ensure sidebar toggle button stays visible and clickable */
+    [data-testid="stSidebarNav"] {margin-top: 0px;}
     
     /* Custom styles for titles */
     .main-title { font-size: 42px; font-weight: bold; color: #ffffff; text-align: center; }
@@ -61,13 +49,8 @@ if menu == "Home":
     
     col1, col2 = st.columns([1, 2])
     with col1:
-        # Copilot ki tajweez ke mutabiq path fix
-        image_path = Path(__file__).parent / "assets" / "katia.jpg"
-        if image_path.exists():
-            st.image(str(image_path), caption="Katia Ferreira", use_container_width=True)
-        else:
-            st.info("🖼️ Profile image will go here\n\n(Photo coming soon!)")
-            
+        # Image line removed, placeholder added
+        st.info("🖼️ Profile image will go here\n\n(Photo coming soon!)")
     with col2:
         st.subheader("Welcome!")
         st.write("""
@@ -120,16 +103,12 @@ elif menu == "Contact":
 
         if submit:
             if name and email and message:
-                # Copilot ki tajweez: Email check karna
-                if "@" not in email or "." not in email:
-                    st.warning("Please enter a valid email address (e.g., name@example.com).")
-                else:
-                    try:
-                        data = {"name": name, "email": email, "message": message}
-                        supabase.table("contact_messages").insert(data).execute()
-                        st.success("Thank you! Your message has been sent successfully.")
-                    except Exception as e:
-                        st.error(f"An error occurred: {e}")
+                try:
+                    data = {"name": name, "email": email, "message": message}
+                    supabase.table("contact_messages").insert(data).execute()
+                    st.success("Thank you! Your message has been sent successfully.")
+                except Exception as e:
+                    st.error(f"An error occurred: {e}")
             else:
                 st.warning("Please fill in all fields before submitting.")
 
